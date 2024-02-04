@@ -44,7 +44,7 @@ const Main: FC = () => {
   }, [apiError]);
 
   return (
-    <section className='relative mx-auto box-border flex h-full w-full max-w-6xl flex-grow flex-col px-4 pt-8'>
+    <section className='relative mx-auto box-border flex h-full w-full max-w-6xl flex-grow flex-col px-4 pt-16'>
       <div className='relative my-auto flex flex-col pb-64 '>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -79,7 +79,7 @@ const Main: FC = () => {
             Сжать
             {isPending && (
               <span className='absolute -left-16 top-1/2 z-50 h-8 w-8 -translate-y-1/2'>
-                <span className='bg-spinner block h-full w-full animate-spin bg-contain bg-center bg-no-repeat sm:w-auto'></span>
+                <span className='block h-full w-full animate-spin bg-spinner bg-contain bg-center bg-no-repeat sm:w-auto'></span>
               </span>
             )}
           </button>
@@ -90,13 +90,13 @@ const Main: FC = () => {
           )}
         </form>
         {link && (
-          <div className='relative mx-auto flex w-full flex-wrap items-center gap-6 self-center sm:flex-nowrap'>
+          <div className='relative mx-auto flex w-full flex-wrap items-center gap-6 self-center sm:w-auto sm:flex-nowrap'>
             <p className='w-full shrink-0 text-center sm:w-auto sm:text-left'>
               Ваша ссылка:
             </p>
             <p
               onClick={onCopy}
-              className='box-border w-full cursor-pointer overflow-hidden text-ellipsis text-nowrap rounded-md bg-white p-3 text-black transition-opacity hover:opacity-80 active:opacity-70'
+              className='box-border w-full cursor-pointer overflow-hidden text-ellipsis text-nowrap rounded-md bg-white p-3 text-black transition-opacity hover:opacity-80 active:opacity-70 md:w-auto'
             >
               {fullLink}
             </p>
