@@ -13,7 +13,7 @@ const Header: FC = () => {
         <img src={URL_LOGO} className='max-w-full' alt='Hex Team. Логотип ссылки' />
       </a>
       <nav>
-        <ul className='flex w-full justify-between gap-5'>
+        <ul className='flex w-full justify-between gap-5 text-base'>
           <li>
             <NavLink
               to='/'

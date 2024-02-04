@@ -14,6 +14,18 @@
 
 @layer components {
   .btn-default {
-    @apply hover:bg-green-cold-hover cursor-pointer rounded-md border-r bg-green-cold px-4 py-3 font-medium transition-colors disabled:opacity-30;
+    @apply active:bg-green-cold-active cursor-pointer rounded-md border-r bg-green-cold px-4 py-3 font-medium transition-colors hover:bg-green-cold-hover disabled:opacity-30;
+  }
+
+  .btn-round {
+    @apply bg-close bg-70 active:bg-green-cold-active h-10 w-10 rounded-full bg-green-cold bg-center bg-no-repeat transition-colors hover:bg-green-cold-hover;
+  }
+
+  .trail-triangle {
+    @apply after:bg-triangle-green-r after:absolute after:-right-8 after:top-1/2 after:h-6 after:w-6 after:-translate-y-1/2 after:bg-contain after:content-[''];
+  }
+
+  .td-long {
+    width: calc(100% - 112px);
   }
 }

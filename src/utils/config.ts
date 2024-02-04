@@ -5,3 +5,5 @@ export const URL_HEX = 'https://hex.team/';
 export const LS_NAME = 'authToken';
 export const LS_SORT_ORDER = 'sort_order';
 export const LS_LIMIT = 'limit';
+
+export const DURATION_ANIMATION_FADE_AWAY = 2500;

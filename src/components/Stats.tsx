@@ -2,9 +2,11 @@ import { ChangeEvent, FC, MouseEvent, useEffect, useState } from 'react';
 import { useStatistics } from '../api/api.queries';
 import { ESort } from '../types/types';
 import { LS_LIMIT, LS_SORT_ORDER } from '../utils/config';
+import Filters from './Filters';
 import LinkRow from './LinkRow';
+import PageLimit from './PageLimit';
 import Pagination from './Pagination';
-import Preloader from './preloader/Preloader';
+import Preloader from './Preloader';
 
 const Stats: FC = () => {
   const orderSaved = localStorage.getItem(LS_SORT_ORDER);
@@ -20,27 +22,15 @@ const Stats: FC = () => {
     offset: offset,
   });
 
-  const isCounterChosen = sortOrder.some(
-    (item) => item === ESort.ASC_COUNTER || item === ESort.DESC_COUNTER
-  );
-  const isShortChosen = sortOrder.some(
-    (item) => item === ESort.ASC_SHORT || item === ESort.DESC_SHORT
-  );
-  const isTargetChosen = sortOrder.some(
-    (item) => item === ESort.ASC_TARGET || item === ESort.DESC_TARGET
-  );
-
   const onSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setSortOrder((state) => [value as unknown as ESort, ...state]);
   };
 
   const deleteSort = (e: MouseEvent) => {
-    const index = sortOrder.findIndex((s) => s === (e.target as HTMLButtonElement).id);
-    setSortOrder((state) => {
-      state.splice(index, 1);
-      return state;
-    });
+    setSortOrder((state) =>
+      state.filter((s) => s !== (e.target as HTMLButtonElement).id)
+    );
   };
 
   const onLimitChange = (e: ChangeEvent) => {
@@ -54,102 +44,48 @@ const Stats: FC = () => {
     [sortOrder.length]
   );
 
-  useEffect(() => localStorage.setItem(LS_LIMIT, limit.toString()), [sortOrder.length]);
+  useEffect(() => localStorage.setItem(LS_LIMIT, limit.toString()), [limit]);
   return (
-    <section>
-      <p>{data?.total}</p>
-      <div>
-        {!(isCounterChosen && isTargetChosen && isShortChosen) && (
-          <select className='text-black' onChange={onSelect}>
-            <option>Выберите способ сортировки...</option>
-            {!isCounterChosen && (
-              <optgroup label='Количество переходов'>
-                <option value={ESort.ASC_COUNTER}>По возрастанию</option>
-                <option value={ESort.DESC_COUNTER}>По убыванию</option>
-              </optgroup>
-            )}
-            {!isShortChosen && (
-              <optgroup label='Имя короткой ссылки'>
-                <option value={ESort.ASC_SHORT}>По возрастанию</option>
-                <option value={ESort.DESC_SHORT}>По убыванию</option>
-              </optgroup>
-            )}
-            {!isTargetChosen && (
-              <optgroup label='Имя полной ссылки'>
-                <option value={ESort.ASC_TARGET}>По возрастанию</option>
-                <option value={ESort.DESC_TARGET}>По убыванию</option>
-              </optgroup>
-            )}
-          </select>
-        )}
-        {[...sortOrder].reverse().map((item, i) => (
-          <div>
-            <p key={i}>{item}</p>
-            <button id={item} onClick={deleteSort}>
-              x
-            </button>
-          </div>
-        ))}
+    <section className='flex flex-grow flex-col'>
+      <Filters sortOrder={sortOrder} onSelect={onSelect} deleteSort={deleteSort} />
+      <div className='mt-7 flex flex-grow flex-col'>
+        <table className='box-border w-full table-fixed text-sm md:text-base'>
+          <thead className='border-b-2'>
+            <tr>
+              <th className='w-full px-2 py-4 font-medium md:px-4'>Полная ссылка</th>
+              <th className='box-border w-24 px-2 py-4 font-medium md:w-28 md:px-4'>
+                Короткая ссылка
+              </th>
+              <th className='box-border w-28 px-2 py-4 font-medium md:px-4'>
+                Количество переходов
+              </th>
+            </tr>
+          </thead>{' '}
+          {!isLoading ? (
+            data ? (
+              <>
+                <tbody>
+                  {data.data.map((link) => (
+                    <LinkRow key={link.id} link={link} />
+                  ))}
+                </tbody>
+              </>
+            ) : (
+              <p>{error?.message || 'Что-то пошло не так...'}</p>
+            )
+          ) : (
+            <Preloader />
+          )}
+        </table>
+        <PageLimit limit={limit} onLimitChange={onLimitChange} />
+        <Pagination
+          total={data?.total || 0}
+          setOffset={setOffset}
+          setLimit={setLimit}
+          limit={limit}
+          offset={offset}
+        />
       </div>
-      {!isLoading ? (
-        data ? (
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Полная ссылка</th>
-                  <th>Короткая ссылка</th>
-                  <th>Количество переходов</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.data.map((link) => (
-                  <LinkRow key={link.id} link={link} />
-                ))}
-              </tbody>
-            </table>
-            <div>
-              <input
-                type='radio'
-                id='limit-10'
-                name='limit'
-                value={10}
-                checked={limit === 10}
-                onChange={onLimitChange}
-              />
-              <label htmlFor='limit-10'>10</label>
-              <input
-                type='radio'
-                id='limit-15'
-                name='limit'
-                value={15}
-                checked={limit === 15}
-                onChange={onLimitChange}
-              />
-              <label htmlFor='limit-10'>15</label>
-              <input
-                type='radio'
-                id='limit-20'
-                name='limit'
-                value={20}
-                checked={limit === 20}
-                onChange={onLimitChange}
-              />
-              <label htmlFor='limit-10'>20</label>
-            </div>
-            <Pagination
-              total={data.total}
-              setOffset={setOffset}
-              setLimit={setLimit}
-              limit={limit}
-            />
-          </div>
-        ) : (
-          <p>Что то пошло не так...</p>
-        )
-      ) : (
-        <Preloader />
-      )}
     </section>
   );
 };
