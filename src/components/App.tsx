@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      <div className='mx-auto box-border flex min-h-full w-full max-w-6xl flex-grow flex-col px-4 text-xl text-white'>
+      <div className='flex min-h-full flex-grow flex-col text-xl text-white'>
         {!isChecking ? (
           <Routes>
             <Route element={<PrivateRoute isLoggedIn={!isLoggedIn} path='/' />}>

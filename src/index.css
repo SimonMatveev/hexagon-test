@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
 @layer base {
   #root {
     background-color: #000;
@@ -14,18 +19,26 @@
 
 @layer components {
   .btn-default {
-    @apply active:bg-green-cold-active cursor-pointer rounded-md border-r bg-green-cold px-4 py-3 font-medium transition-colors hover:bg-green-cold-hover disabled:opacity-30;
+    @apply disabled:text-grey-light cursor-pointer rounded-md border-r border-none bg-green-cold px-4 py-5 font-medium transition-colors hover:bg-green-cold-hover active:bg-green-cold-active disabled:pointer-events-none disabled:bg-grey-dark md:py-3;
   }
 
   .btn-round {
-    @apply bg-close bg-70 active:bg-green-cold-active h-10 w-10 rounded-full bg-green-cold bg-center bg-no-repeat transition-colors hover:bg-green-cold-hover;
+    @apply h-10 w-10 rounded-full border-none bg-green-cold bg-close bg-70 bg-center bg-no-repeat transition-colors hover:bg-green-cold-hover active:bg-green-cold-active;
   }
 
   .trail-triangle {
-    @apply after:bg-triangle-green-r after:absolute after:-right-8 after:top-1/2 after:h-6 after:w-6 after:-translate-y-1/2 after:bg-contain after:content-[''];
+    @apply after:absolute after:-right-8 after:top-1/2 after:h-6 after:w-6 after:-translate-y-1/2 after:bg-triangle-green-r after:bg-contain after:content-[''];
   }
 
-  .td-long {
-    width: calc(100% - 112px);
+  .underlined {
+    @apply relative font-medium transition-colors after:absolute after:-bottom-[2px] after:left-0 after:h-px after:w-full after:content-[""];
+  }
+
+  .underline-white {
+    @apply underlined after:bg-white hover:after:bg-green-cold active:after:bg-green-cold-hover;
+  }
+
+  .underline-green {
+    @apply underlined after:bg-green-cold hover:after:bg-green-cold-hover active:after:bg-green-cold-active;
   }
 }

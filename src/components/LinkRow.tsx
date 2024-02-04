@@ -20,7 +20,7 @@ const LinkRow: FC<ILinkRowProps> = ({ link }) => {
     <tr className='relative h-10 w-full align-middle'>
       <td
         onClick={onTargetCopy}
-        className='td-long relative cursor-pointer overflow-hidden text-ellipsis text-nowrap pr-4 transition-colors hover:bg-grey-dark'
+        className='relative cursor-pointer overflow-hidden text-ellipsis text-nowrap pr-4 transition-colors hover:bg-grey-dark'
       >
         {link.target}
         {isTargetCopied && (
@@ -38,7 +38,7 @@ const LinkRow: FC<ILinkRowProps> = ({ link }) => {
         {link.short}
         {isCopied && (
           <span
-            className={`${isCopied ? 'animate-fade-away ' : ''}absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md bg-green-cold p-2 text-xxs sm:text-xs md:left-3/4 md:translate-x-0 md:text-sm`}
+            className={`${isCopied ? 'animate-fade-away ' : ''}absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md bg-green-cold p-2 text-xxs sm:text-xs md:left-full md:translate-x-0 md:text-sm`}
           >
             Cкопировано
           </span>

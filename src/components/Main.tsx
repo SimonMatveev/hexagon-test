@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSqueze } from '../api/api.queries';
+import { useSqueze } from '../api/api.hooks';
 import useCopy from '../hooks/useCopy';
 import { DURATION_ANIMATION_FADE_AWAY, URL_BASE } from '../utils/config';
 import { REGEXP_URL } from '../utils/regExps';
@@ -13,21 +13,24 @@ const Main: FC = () => {
   const {
     register,
     handleSubmit,
-    getValues,
+    watch,
+    setValue,
     formState: { errors, isValid },
   } = useForm<{ link: string }>({ mode: 'onChange' });
-  const { mutate, data, isSuccess, error: apiError } = useSqueze();
+  const { mutate, data, isSuccess, error: apiError, isPending } = useSqueze();
   const { isCopied, onCopy } = useCopy({
     fullLink,
     animationDuration: DURATION_ANIMATION_FADE_AWAY,
   });
+  const linkWatch = watch('link');
 
   const handlePopupClose = () => setPopupOpen(false);
 
+  const handleReset = () => setValue('link', '');
+
   const onSubmit = () => {
     handlePopupClose();
-    const { link } = getValues();
-    mutate({ link });
+    mutate({ link: linkWatch });
   };
 
   useEffect(() => {
@@ -41,43 +44,65 @@ const Main: FC = () => {
   }, [apiError]);
 
   return (
-    <section className='relative flex h-full flex-grow flex-col'>
+    <section className='relative mx-auto box-border flex h-full w-full max-w-6xl flex-grow flex-col px-4 pt-8'>
       <div className='relative my-auto flex flex-col pb-64 '>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='my-auto mb-6 flex justify-between gap-x-5'
+          className={`relative my-auto mb-6 flex flex-wrap justify-between gap-x-5 gap-y-4 sm:flex-nowrap sm:gap-y-0${!link ? ' pb-[52px]' : ''}`}
         >
+          {linkWatch && (
+            <button
+              type='button'
+              onClick={handleReset}
+              className='btn-default absolute -top-[84px] left-0'
+            >
+              Очистить
+            </button>
+          )}
           <input
-            className='flex-grow rounded-md p-5 text-black outline-none'
+            className='touche w-full flex-grow rounded-md p-5 pr-14 text-black outline-none sm:w-auto'
             {...register('link', {
               pattern: {
                 value: REGEXP_URL,
-                message: 'Введите валидный URL',
+                message: 'Невалидный URL',
               },
               required: true,
             })}
             placeholder='https://example.com'
             aria-label='Введите ссылку'
           />
-          <button type='submit' disabled={!isValid} className='btn-default'>
+          <button
+            type='submit'
+            disabled={!isValid || isPending}
+            className='btn-default relative w-full sm:w-auto'
+          >
             Сжать
+            {isPending && (
+              <span className='absolute -left-16 top-1/2 z-50 h-8 w-8 -translate-y-1/2'>
+                <span className='bg-spinner block h-full w-full animate-spin bg-contain bg-center bg-no-repeat sm:w-auto'></span>
+              </span>
+            )}
           </button>
           {errors.link && (
-            <p className='absolute -top-12 right-0 text-red'>{errors.link.message}</p>
+            <p className='absolute -top-12 right-0 text-base text-red md:text-lg'>
+              {errors.link.message}
+            </p>
           )}
         </form>
         {link && (
-          <div className='relative mx-auto flex items-center gap-6 self-center'>
-            <p>Ваша ссылка:</p>
+          <div className='relative mx-auto flex w-full flex-wrap items-center gap-6 self-center sm:flex-nowrap'>
+            <p className='w-full shrink-0 text-center sm:w-auto sm:text-left'>
+              Ваша ссылка:
+            </p>
             <p
               onClick={onCopy}
-              className='cursor-pointer rounded-md bg-white p-3 text-black transition-opacity hover:opacity-80 active:opacity-70'
+              className='box-border w-full cursor-pointer overflow-hidden text-ellipsis text-nowrap rounded-md bg-white p-3 text-black transition-opacity hover:opacity-80 active:opacity-70'
             >
               {fullLink}
             </p>
             {isCopied && (
               <span
-                className={`${isCopied ? 'animate-fade-away ' : ''}absolute right-2 top-1/2 -translate-y-1/2 rounded-md bg-green-cold p-2 text-sm`}
+                className={`${isCopied ? 'animate-fade-away ' : ''}absolute right-2 top-[60px] rounded-md bg-green-cold p-2 text-sm sm:top-1/2 sm:-translate-y-1/2`}
               >
                 Cкопировано
               </span>

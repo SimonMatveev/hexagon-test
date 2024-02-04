@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useState } from 'react';
-import { useStatistics } from '../api/api.queries';
+import { Link } from 'react-router-dom';
+import { useStatistics } from '../api/api.hooks';
 import { ESort } from '../types/types';
 import { LS_LIMIT, LS_SORT_ORDER } from '../utils/config';
 import Filters from './Filters';
@@ -46,45 +47,66 @@ const Stats: FC = () => {
 
   useEffect(() => localStorage.setItem(LS_LIMIT, limit.toString()), [limit]);
   return (
-    <section className='flex flex-grow flex-col'>
+    <section className='mx-auto box-border flex w-full max-w-6xl flex-grow flex-col px-4 '>
       <Filters sortOrder={sortOrder} onSelect={onSelect} deleteSort={deleteSort} />
       <div className='mt-7 flex flex-grow flex-col'>
-        <table className='box-border w-full table-fixed text-sm md:text-base'>
-          <thead className='border-b-2'>
-            <tr>
-              <th className='w-full px-2 py-4 font-medium md:px-4'>Полная ссылка</th>
-              <th className='box-border w-24 px-2 py-4 font-medium md:w-28 md:px-4'>
-                Короткая ссылка
-              </th>
-              <th className='box-border w-28 px-2 py-4 font-medium md:px-4'>
-                Количество переходов
-              </th>
-            </tr>
-          </thead>{' '}
-          {!isLoading ? (
-            data ? (
-              <>
+        {!isLoading ? (
+          data ? (
+            data.data.length > 0 ? (
+              <table className='box-border w-full table-fixed text-sm md:text-base'>
+                <thead className='border-b-2'>
+                  <tr>
+                    <th className='w-full px-2 py-4 font-medium md:px-4'>
+                      Полная ссылка
+                    </th>
+                    <th className='box-border w-24 px-2 py-4 font-medium md:w-28 md:px-4'>
+                      Короткая ссылка
+                    </th>
+                    <th className='box-border w-28 px-2 py-4 font-medium md:px-4'>
+                      Количество переходов
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
                   {data.data.map((link) => (
                     <LinkRow key={link.id} link={link} />
                   ))}
                 </tbody>
-              </>
+              </table>
             ) : (
-              <p>{error?.message || 'Что-то пошло не так...'}</p>
+              <div className='flex w-full flex-grow flex-col justify-center self-stretch align-middle'>
+                <p className='text-center'>Ссылок пока нет!</p>
+                <p className='text-center'>
+                  Перейдите на{' '}
+                  <Link
+                    className='underline-green text-green-cold transition-colors hover:text-green-cold-hover active:text-green-cold-active'
+                    to='/'
+                  >
+                    главную
+                  </Link>
+                  , чтобы добавить
+                </p>
+              </div>
             )
           ) : (
-            <Preloader />
-          )}
-        </table>
-        <PageLimit limit={limit} onLimitChange={onLimitChange} />
-        <Pagination
-          total={data?.total || 0}
-          setOffset={setOffset}
-          setLimit={setLimit}
-          limit={limit}
-          offset={offset}
-        />
+            <div className='flex w-full flex-grow flex-col justify-center self-stretch align-middle'>
+              <p className='mb-4 text-center font-bold text-green-cold'>Ошибка</p>
+              <p className='text-center'>{error?.message || 'Что-то пошло не так...'}</p>
+            </div>
+          )
+        ) : (
+          <Preloader />
+        )}
+        <div className='mt-auto flex flex-col'>
+          <Pagination
+            total={data?.total || 0}
+            setOffset={setOffset}
+            setLimit={setLimit}
+            limit={limit}
+            offset={offset}
+          />
+          <PageLimit limit={limit} onLimitChange={onLimitChange} />
+        </div>
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ interface IPageLimitProps {
 
 const PageLimit: FC<IPageLimitProps> = ({ limit, onLimitChange }) => {
   return (
-    <div className='mb-8 ml-auto mt-auto flex gap-x-4 pt-4'>
+    <div className='mb-8 ml-auto mt-8 flex gap-x-4'>
       <p className='text-base'>Ссылок на странице: </p>
       <ul className='flex gap-x-4 text-base'>
         <li>

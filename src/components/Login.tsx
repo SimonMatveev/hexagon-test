@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useLogin } from '../api/api.queries';
+import { useLogin } from '../api/api.hooks';
 import { IFormProps } from '../types/types';
 import Form from './Form';
 

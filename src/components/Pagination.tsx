@@ -18,10 +18,9 @@ const Pagination: FC<IPaginationProps> = ({ total, setOffset, limit, offset }) =
   };
   const onFirstClick = () => setOffset(0);
   const onLastClick = () => setOffset((totalPages - 1) * limit);
-
-  if (total <= limit) return null;
+  if (totalPages === 1 || totalPages === 0) return null;
   return (
-    <ul className='flex justify-center gap-x-2 text-base md:gap-x-3 md:text-lg'>
+    <ul className='mt-8 flex justify-center gap-x-2 text-base md:gap-x-3 md:text-lg'>
       <li>
         <button
           aria-label='На первую страницу'

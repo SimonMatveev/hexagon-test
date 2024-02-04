@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { useRegister } from '../api/api.queries';
+import { useRegister } from '../api/api.hooks';
 import { IFormProps } from '../types/types';
 import Form from './Form';
 

@@ -13,6 +13,7 @@ export default {
       red: '#f00',
       transparent: 'transparent',
       'grey-dark': '#242424',
+      'grey-light': '#a3a3a3',
     },
     screens: {
       sm: '500px',
@@ -61,6 +62,7 @@ export default {
         'triangle-green-r': 'url("/src/img/triangle-filled-r.svg")',
         'triangle-white-r': 'url("/src/img/triangle-white-r.svg")',
         'triangle-white-l': 'url("/src/img/triangle-white-l.svg")',
+        spinner: 'url("/src/img/spinner.svg")',
       },
       fontSize: {
         xxs: '10px',
