@@ -31,6 +31,7 @@ const Main: FC = () => {
   const handleReset = () => {
     setValue('link', '');
     trigger('link');
+    setLink('');
   };
 
   const onSubmit = () => {
