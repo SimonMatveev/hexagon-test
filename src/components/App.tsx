@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router';
 import PrivateRoute from '../utils/PrivateRoute';
 import { getTokenFromLS } from '../utils/functions';
@@ -6,9 +6,10 @@ import Layout from './Layout';
 import Login from './Login';
 import Main from './Main';
 import NotFound from './NotFound';
+import Preloader from './Preloader';
 import Register from './Register';
-import Stats from './Stats';
-import Preloader from './preloader/Preloader';
+
+const LazyStats = lazy(() => import('./Stats'));
 
 function App() {
   const [isChecking, setIsChecking] = useState(true);
@@ -23,11 +24,11 @@ function App() {
       setIsLoggedIn(false);
     }
     setIsChecking(false);
-  });
+  }, []);
 
   return (
     <>
-      <div>
+      <div className='flex min-h-full flex-grow flex-col text-xl text-white'>
         {!isChecking ? (
           <Routes>
             <Route element={<PrivateRoute isLoggedIn={!isLoggedIn} path='/' />}>
@@ -37,7 +38,14 @@ function App() {
             <Route element={<PrivateRoute isLoggedIn={isLoggedIn} path='/login' />}>
               <Route element={<Layout />}>
                 <Route path='/' element={<Main />}></Route>
-                <Route path='/stats' element={<Stats />}></Route>
+                <Route
+                  path='/stats'
+                  element={
+                    <Suspense fallback={<Preloader />}>
+                      <LazyStats />
+                    </Suspense>
+                  }
+                ></Route>
               </Route>
             </Route>
             <Route path='/*' element={<NotFound />} />

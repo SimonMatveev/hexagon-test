@@ -3,16 +3,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: black !important;
+}
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@layer base {
+  #root {
+    background-color: #000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  .btn-default {
+    @apply disabled:text-grey-light cursor-pointer rounded-md border-r border-none bg-green-cold px-4 py-5 font-medium transition-colors hover:bg-green-cold-hover active:bg-green-cold-active disabled:pointer-events-none disabled:bg-grey-dark md:py-3;
+  }
+
+  .btn-round {
+    @apply h-10 w-10 rounded-full border-none bg-green-cold bg-close bg-70 bg-center bg-no-repeat transition-colors hover:bg-green-cold-hover active:bg-green-cold-active;
+  }
+
+  .trail-triangle {
+    @apply after:absolute after:-right-8 after:top-1/2 after:h-6 after:w-6 after:-translate-y-1/2 after:bg-triangle-green-r after:bg-contain after:content-[''];
+  }
+
+  .underlined {
+    @apply relative font-medium transition-colors after:absolute after:-bottom-[2px] after:left-0 after:h-px after:w-full after:content-[""];
+  }
+
+  .underline-white {
+    @apply underlined after:bg-white hover:after:bg-green-cold active:after:bg-green-cold-hover;
+  }
+
+  .underline-green {
+    @apply underlined after:bg-green-cold hover:after:bg-green-cold-hover active:after:bg-green-cold-active;
+  }
 }

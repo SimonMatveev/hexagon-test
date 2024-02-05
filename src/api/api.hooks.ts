@@ -54,6 +54,6 @@ export const useStatistics = ({ limit, offset, order }: IStatisticsParams) =>
     queryFn: () => getStatistics({ limit, offset, order }),
     queryKey: ['statistics', { limit, offset, order }],
     retry: false,
-    refetchInterval: 10000,
     refetchOnWindowFocus: true,
+    staleTime: 10000,
   });

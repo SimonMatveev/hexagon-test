@@ -7,11 +7,11 @@ import {
   IStatisticsParams,
   IUserData,
 } from '../types/types';
-import { BASE_URL } from '../utils/config';
+import { URL_BASE } from '../utils/config';
 import { getTokenString } from '../utils/functions';
 
 const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
+  baseURL: `${URL_BASE}/api`,
   timeout: 10000,
   timeoutErrorMessage: 'Проблемы с подключением. Повторите попытку позднее',
   responseType: 'json',
