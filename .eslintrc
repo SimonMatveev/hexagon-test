@@ -20,6 +20,7 @@
     "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": ["off"],
     "@typescript-eslint/no-unused-vars": ["warn"],
     "prettier/prettier": [
       "error",
