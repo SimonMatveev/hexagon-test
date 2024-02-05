@@ -51,7 +51,7 @@ const Main: FC = () => {
 
   return (
     <section className='relative mx-auto box-border flex h-full w-full max-w-6xl flex-grow flex-col px-4 pt-16'>
-      <div className='relative my-auto flex flex-col pb-64 '>
+      <div className='relative mt-8 flex flex-col sm:my-auto'>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={`relative my-auto mb-6 flex flex-wrap justify-between gap-x-5 gap-y-4 sm:flex-nowrap sm:gap-y-0${!link ? ' pb-[52px]' : ''}`}
