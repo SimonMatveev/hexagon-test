@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import PrivateRoute from '../utils/PrivateRoute';
 import { getTokenFromLS } from '../utils/functions';
 import Layout from './Layout';
@@ -31,6 +31,7 @@ function App() {
       <div className='flex min-h-full flex-grow flex-col text-xl text-white'>
         {!isChecking ? (
           <Routes>
+            <Route path='/404' element={<NotFound />} />
             <Route element={<PrivateRoute isLoggedIn={!isLoggedIn} path='/' />}>
               <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
               <Route path='/register' element={<Register />} />
@@ -48,7 +49,7 @@ function App() {
                 ></Route>
               </Route>
             </Route>
-            <Route path='/*' element={<NotFound />} />
+            <Route element={<Navigate to='/404' />} path='/*' />
           </Routes>
         ) : (
           <Preloader />

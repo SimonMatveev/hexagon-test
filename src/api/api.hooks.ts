@@ -41,8 +41,8 @@ export const useSqueze = () =>
   useMutation<ISqueezeResponse, AxiosError, ISqueezeRequest>({
     mutationFn: ({ link }: ISqueezeRequest) => squeeze({ link }),
     onError: (err) => {
-      if (err.response && err.response.status === 400) {
-        err.message = 'Пользователя с таким именем и паролем не существует';
+      if (err.response && err.response.status === 401) {
+        err.message = 'Проблема с авторизацией';
       } else if (err.response && err.response.status !== 200) {
         err.message = 'Произошла ошибка, попробуйте позднее';
       }

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import useCopy from '../hooks/useCopy';
 import { ISqueezeResponse } from '../types/types';
 import { DURATION_ANIMATION_FADE_AWAY, URL_BASE } from '../utils/config';
+import { buttonize } from '../utils/functions';
 
 interface ILinkRowProps {
   link: ISqueezeResponse;
@@ -19,7 +20,7 @@ const LinkRow: FC<ILinkRowProps> = ({ link }) => {
   return (
     <tr className='relative h-10 w-full align-middle'>
       <td
-        onClick={onTargetCopy}
+        {...buttonize(onTargetCopy)}
         className='relative cursor-pointer overflow-hidden text-ellipsis text-nowrap pr-4 transition-colors hover:bg-grey-dark'
       >
         {link.target}
@@ -32,7 +33,7 @@ const LinkRow: FC<ILinkRowProps> = ({ link }) => {
         )}
       </td>
       <td
-        onClick={onCopy}
+        {...buttonize(onCopy)}
         className='relative box-border w-24 cursor-pointer px-2 text-center transition-colors hover:bg-grey-dark md:px-4'
       >
         {link.short}

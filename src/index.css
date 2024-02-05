@@ -19,11 +19,15 @@ input:-webkit-autofill {
 
 @layer components {
   .btn-default {
-    @apply disabled:text-grey-light cursor-pointer rounded-md border-r border-none bg-green-cold px-4 py-5 font-medium transition-colors hover:bg-green-cold-hover active:bg-green-cold-active disabled:pointer-events-none disabled:bg-grey-dark md:py-3;
+    @apply cursor-pointer rounded-md border-none bg-green-cold px-4 py-5 font-medium transition-colors hover:bg-green-cold-hover active:bg-green-cold-active disabled:pointer-events-none disabled:bg-grey-dark disabled:text-grey-light md:py-3;
   }
 
   .btn-round {
     @apply h-10 w-10 rounded-full border-none bg-green-cold bg-close bg-70 bg-center bg-no-repeat transition-colors hover:bg-green-cold-hover active:bg-green-cold-active;
+  }
+
+  .btn-transparent {
+    @apply cursor-pointer rounded-md border-2 border-white px-4 py-5 text-white hover:bg-grey-dark active:bg-transparent md:py-3;
   }
 
   .trail-triangle {
@@ -40,5 +44,13 @@ input:-webkit-autofill {
 
   .underline-green {
     @apply underlined after:bg-green-cold hover:after:bg-green-cold-hover active:after:bg-green-cold-active;
+  }
+
+  .writing-v {
+    writing-mode: vertical-lr;
+  }
+
+  .writing-h {
+    writing-mode: initial;
   }
 }
