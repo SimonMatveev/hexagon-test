@@ -127,10 +127,10 @@ const Form: FC<
           </button>
         </div>
       </form>
-      <div className='flex justify-center gap-4'>
-        <p>{questionText}</p>
+      <div className='flex justify-center gap-4 text-sm md:text-base '>
+        <p className='shrink-0'>{questionText}</p>
         <Link
-          className='underline-white transition-colors hover:text-green-cold active:text-green-cold-hover'
+          className='underline-green text-green-cold transition-colors hover:text-green-cold-hover active:text-green-cold-active'
           to={pathLink}
         >
           {pathText}

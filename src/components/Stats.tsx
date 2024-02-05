@@ -59,10 +59,10 @@ const Stats: FC = () => {
                     <th className='w-full px-2 py-4 font-medium md:px-4'>
                       Полная ссылка
                     </th>
-                    <th className='box-border w-24 px-2 py-4 font-medium md:w-28 md:px-4'>
+                    <th className='writing-v sm:writing-h box-border w-16 px-2 py-4 font-medium sm:w-28 md:px-4'>
                       Короткая ссылка
                     </th>
-                    <th className='box-border w-28 px-2 py-4 font-medium md:px-4'>
+                    <th className='writing-v sm:writing-h box-border w-16 px-2 py-4 font-medium sm:w-28 md:px-4'>
                       Количество переходов
                     </th>
                   </tr>

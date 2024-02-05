@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSqueze } from '../api/api.hooks';
 import useCopy from '../hooks/useCopy';
 import { DURATION_ANIMATION_FADE_AWAY, URL_BASE } from '../utils/config';
+import { buttonize } from '../utils/functions';
 import { REGEXP_URL } from '../utils/regExps';
 import Popup from './Popup';
 
@@ -15,6 +16,7 @@ const Main: FC = () => {
     handleSubmit,
     watch,
     setValue,
+    trigger,
     formState: { errors, isValid },
   } = useForm<{ link: string }>({ mode: 'onChange' });
   const { mutate, data, isSuccess, error: apiError, isPending } = useSqueze();
@@ -26,7 +28,10 @@ const Main: FC = () => {
 
   const handlePopupClose = () => setPopupOpen(false);
 
-  const handleReset = () => setValue('link', '');
+  const handleReset = () => {
+    setValue('link', '');
+    trigger('link');
+  };
 
   const onSubmit = () => {
     handlePopupClose();
@@ -54,7 +59,7 @@ const Main: FC = () => {
             <button
               type='button'
               onClick={handleReset}
-              className='btn-default absolute -top-[84px] left-0'
+              className='btn-transparent absolute -top-[90px] left-0 md:-top-20'
             >
               Очистить
             </button>
@@ -95,7 +100,7 @@ const Main: FC = () => {
               Ваша ссылка:
             </p>
             <p
-              onClick={onCopy}
+              {...buttonize(onCopy)}
               className='box-border w-full cursor-pointer overflow-hidden text-ellipsis text-nowrap rounded-md bg-white p-3 text-black transition-opacity hover:opacity-80 active:opacity-70 md:w-auto'
             >
               {fullLink}

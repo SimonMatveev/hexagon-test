@@ -5,6 +5,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
     "prettier",
     "plugin:prettier/recommended"
   ],
@@ -15,12 +16,12 @@
   },
   "ignorePatterns": ["dist", ".eslintrc.cjs"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react-refresh", "prettier", "@tanstack/query"],
+  "plugins": ["react-refresh", "prettier", "@tanstack/query", "jsx-a11y"],
   "rules": {
     "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-vars": "off",
-    "react-hooks/exhaustive-deps": ["off"],
+    "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "prettier/prettier": [
       "error",

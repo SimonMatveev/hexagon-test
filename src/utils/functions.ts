@@ -1,3 +1,4 @@
+import { EventHandler, KeyboardEvent } from 'react';
 import { ILoginResponse } from '../types/types';
 import { LS_NAME } from './config';
 
@@ -12,4 +13,16 @@ export function getTokenFromLS(): ILoginResponse | null {
 export function getTokenString() {
   const token = getTokenFromLS();
   return `${token?.token_type} ${token?.access_token}`;
+}
+//eslint-disable-next-line
+export function buttonize(handler: EventHandler<any>) {
+  return {
+    role: 'button',
+    onClick: handler,
+    tabIndex: 0,
+    onKeyDown: (event: KeyboardEvent) => {
+      // insert your preferred method for detecting the keypress
+      if (event.key === 'Enter') handler(event);
+    },
+  };
 }
