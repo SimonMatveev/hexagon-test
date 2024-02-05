@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import LoginContext from '../contexts/loginContext';
 import PrivateRoute from '../utils/PrivateRoute';
 import { getTokenFromLS } from '../utils/functions';
 import Layout from './Layout';
@@ -27,7 +28,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <LoginContext.Provider value={setIsLoggedIn}>
       <div className='flex min-h-full flex-grow flex-col text-xl text-white'>
         {!isChecking ? (
           <Routes>
@@ -55,7 +56,7 @@ function App() {
           <Preloader />
         )}
       </div>
-    </>
+    </LoginContext.Provider>
   );
 }
 
