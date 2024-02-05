@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { queryClient } from '../main';
 import {
   ILoginResponse,
   IRegisterResponse,
@@ -46,6 +47,9 @@ export const useSqueze = () =>
       } else if (err.response && err.response.status !== 200) {
         err.message = 'Произошла ошибка, попробуйте позднее';
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['statistics'] });
     },
   });
 
