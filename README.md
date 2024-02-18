@@ -30,7 +30,9 @@ npm run dev
 npm run build
 ```
 
-3. Возможна сборка прод версии и запуск сервера Nginx на `localhost:3000` с помощью Docker:
+3. Возможна сборка сервера Nginx, раздающего статику с помощью Docker:
+
+Сервер доступен по адресу http://localhost:3000
 
 ```
 docker-compose up --build
