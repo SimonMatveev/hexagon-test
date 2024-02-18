@@ -33,5 +33,5 @@ npm run build
 3. Возможна сборка прод версии и запуск сервера Nginx на `localhost:3000` с помощью Docker:
 
 ```
-docker compose up --build
+docker-compose up --build
 ```
